@@ -20,10 +20,4 @@ class Blog extends Model
         return $this->morphMany(Like::class, 'likeable');
     }
 
-    public function isLikedBy($userId)
-    {
-        return $this->likes()
-            ->where('user_id', $userId)
-            ->exists();
-    }
 }

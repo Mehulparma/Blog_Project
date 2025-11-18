@@ -17,6 +17,10 @@ class BlogController extends Controller
         $userId = auth()->id();
 
         $query = Blog::with(['user'])
+            ->withCount('likes')
+            ->withExists(['likes as is_liked' => function ($q) use ($userId) {
+                $q->where('user_id', $userId);
+            }])
             ->where('user_id', $userId);
 
 
@@ -102,7 +106,7 @@ class BlogController extends Controller
                 [
                     'title' => ['required', 'string', 'max:255'],
                     'description' => ['required', 'string'],
-                    'image'  => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
+                    'image'  => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048']
                 ],
                 [
                     'title.required'       => 'Blog title is required.',

@@ -22,9 +22,9 @@ class BlogResource extends JsonResource
             'title'         => $this->title,
             'description'   => $this->description,
             'image'         => url('storage/' . $this->image),
-            'likes_count'   => $this->likes->count() ?? 0,
-            'is_liked'      => $this->isLikedBy(auth()->id()) ?? 0,
-            'created_by'    => Auth::user()->name,
+            'likes_count'   => $this->likes_count ?? 0,
+            'is_liked'      => (bool) $this->is_liked,
+            'created_by'    => $this->user->name,
             'created_at'    => Carbon::parse($this->created_at)->format('d-m-Y H:i:s'),
         ];
     }
